@@ -1,0 +1,15 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
+[pull]
+	ff = only
+[credential]
+	helper = store
+[user]
+	email = thenuboflegend@proton.me
+	name = thenuboflegend
+[core]
+	editor = =
