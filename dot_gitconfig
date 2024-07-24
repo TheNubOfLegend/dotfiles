@@ -7,6 +7,10 @@
 	name = thenuboflegend
 [core]
 	editor = nvim
+	autocrlf = input
+	safecrlf = true
+	#fixed a clone but no checkout error once
+	longpaths = true
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
