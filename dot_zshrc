@@ -7,9 +7,10 @@
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTSIZE=1100
 SAVEHIST=1000
 setopt autocd
+setopt histignorealldups
 unsetopt beep notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
