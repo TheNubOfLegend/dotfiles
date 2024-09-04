@@ -23,7 +23,8 @@
     },
     "clock": {
         "format": "{:%H:%M}",
-        "format-alt": "{:%a, %d. %b %Y - %H:%M}"
+        "format-alt": "{:%a, %d. %b %Y - %H:%M}",
+        "tooltip": false
     },
     "backlight": {
         "device": "intel_backlight",
@@ -39,7 +40,7 @@
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">VOL</span> {volume}% ",
         "format-bluetooth": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">BLE</span> {volume}% ",
         "format-muted": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">MUT</span> 0% ",
-        "scroll-step": 1,
+        "scroll-step": 2,
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "ignored-sinks": [
             "Easy Effects Sink"

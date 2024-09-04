@@ -5,6 +5,9 @@
 #  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 #fi
 
+PATH=$PATH:~/.local/bin
+EDITOR=/usr/bin/nvim
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1100
