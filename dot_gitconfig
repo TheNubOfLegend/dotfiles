@@ -7,8 +7,8 @@
 	name = thenuboflegend
 [core]
 	editor = nvim
-	autocrlf = input
-	safecrlf = true
+	autocrlf = false
+	safecrlf = false
 	#fixed a clone but no checkout error once
 	longpaths = true
 [credential "https://github.com"]

@@ -7,6 +7,7 @@
 
 PATH=$PATH:~/.local/bin
 EDITOR=/usr/bin/nvim
+JAVA_HOME=/usr/bin/java
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
@@ -16,6 +17,10 @@ setopt autocd
 setopt histignorealldups
 unsetopt beep notify
 bindkey -e
+
+alias ga="git add -A"
+alias gc="git commit -a"
+alias gac="git add -A && git commit -a"
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/nub/.zshrc'
