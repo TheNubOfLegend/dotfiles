@@ -1,6 +1,15 @@
 #!/bin/sh
 
+declare CURR=$(( $(date +%H) / 3 % 7 + 1 ))
+hyprctl hyprpaper preload "~/.config/hypr/paper/${CURR}.jpg"
+hyprctl hyprpaper wallpaper "HDMI-A-1,~/.config/hypr/paper/${CURR}.jpg"
+
 while [ true ]; do
-  hyprctl hyprpaper wallpaper "eDP-1,~/.config/hypr/paper/$(( $(date +%H) / 3 % 7 + 1 )).jpg"
-  sleep 600
+  if [ $(( $(date +%H) / 3 % 7 + 1 )) -ne ${CURR} ]; then
+    hyprctl hyprpaper preload "~/.config/hypr/paper/$(( $(date +%H) / 3 % 7 + 1 )).jpg"
+    hyprctl hyprpaper wallpaper "HDMI-A-1,~/.config/hypr/paper/$(( $(date +%H) / 3 % 7 + 1 )).jpg"
+    hyprctl hyprpaper unload "~/.config/hypr/paper/${CURR}.jpg"
+  fi
+  CURR=$(( $(date +%H) / 3 % 7 + 1 ))
+  sleep 900
 done
