@@ -13,9 +13,9 @@ bindl=,switch:off:Lid Switch, exec, hyprctl dispatch dpms on
 
 input {
   sensitivity = -0.3
-}" > ../devices.conf
+}" > ~/.config/hypr/devices.conf;
 
-elif [[ $(cat /etc/hostname) == "nublap" ]]; then
+elif [[ $(cat /etc/hostname) == "nubdesk" ]]; then
   echo "
 monitor=,2560x1440@144,auto,auto
 
@@ -29,5 +29,5 @@ env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 
 input {
   sensitivity = -0.7
-}" > ../devices.conf
+}" > ~/.config/hypr/devices.conf;
 fi
