@@ -1,6 +1,7 @@
 [font]
 #normal = { family = "DejaVu Sans", style = "Book" }
-  normal = { family = "Fira Code Nerd Font Mono", style = "Retina" }
+  # normal = { family = "Fira Code Nerd Font Mono", style = "Retina" }
+  normal = { family = "JetBrains Mono", style = "Medium" }
   size = 9
 #[colors]
 #  primary = { background = "#2e3440", foreground = "#d8dee9", dim_foreground = "#a5abb6" }

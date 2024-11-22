@@ -19,8 +19,7 @@ elif [[ $(cat /etc/hostname) == "nubdesk" ]]; then
   echo "
 monitor=,2560x1440@144,auto,auto
 
-# SUSPEND
-exec-once = ~/.config/hypr/scripts/suspend.sh
+exec-once = ~/bash/brightness.sh
 
 env = LIBVA_DRIVER_NAME,nvidia
 env = XDG_SESSION_TYPE,wayland
