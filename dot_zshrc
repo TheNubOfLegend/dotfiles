@@ -2,9 +2,9 @@ PATH=$PATH:~/.local/bin
 EDITOR=/usr/bin/nvim
 JAVA_HOME=/usr/bin/java
 
-if uwsm check may-start; then
-  exec uwsm start hyprland.desktop
-fi
+# if uwsm check may-start; then
+#   exec uwsm start hyprland.desktop
+# fi
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
