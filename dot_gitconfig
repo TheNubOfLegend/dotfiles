@@ -7,7 +7,7 @@
 	name = thenuboflegend
 [core]
 	editor = nvim
-	autocrlf = false
+	autocrlf = input
 	safecrlf = false
 	#fixed a clone but no checkout error once
 	longpaths = true
