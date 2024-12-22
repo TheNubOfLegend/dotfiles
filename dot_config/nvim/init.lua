@@ -108,9 +108,9 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-if vim.g.neovide then
-    vim.g.neovide_refresh_rate = 144
-    vim.g.neovide_fullscreen = true
-    vim.o.guifont = "Source Code Pro:h11"
-end
+-- if vim.g.neovide then
+--     vim.g.neovide_refresh_rate = 144
+--     vim.g.neovide_fullscreen = true
+--     vim.o.guifont = "Source Code Pro:h11"
+-- end
 
