@@ -1,6 +1,4 @@
 return {
-    -- 'arcticicestudio/nord-vim',
-    --'sainnhe/gruvbox-material',
     'sainnhe/everforest',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()

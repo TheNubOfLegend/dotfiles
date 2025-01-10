@@ -16,7 +16,7 @@ unsetopt beep notify
 bindkey -e
 
 alias lg="lazygit"
-alias vi="nvim"
+alias v="nvim"
 # alias ga="git add -A"
 # alias gc="git commit -a"
 # alias gac="git add -A && git commit -a"
