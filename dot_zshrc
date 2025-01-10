@@ -15,9 +15,11 @@ setopt histignorealldups
 unsetopt beep notify
 bindkey -e
 
-alias ga="git add -A"
-alias gc="git commit -a"
-alias gac="git add -A && git commit -a"
+alias lg="lazygit"
+alias vi="nvim"
+# alias ga="git add -A"
+# alias gc="git commit -a"
+# alias gac="git add -A && git commit -a"
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/nub/.zshrc'
