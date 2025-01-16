@@ -4,8 +4,8 @@ if [[ $(cat /etc/hostname) == "nublap" ]]; then
   echo "
 monitor=eDP-1,1920x1080,auto,1
 
-bind = , XF86MonBrightnessUp, exec, brightnessctl set +25
-bind = , XF86MonBrightnessDown, exec, brightnessctl set 25-
+bind = , XF86MonBrightnessUp, exec, brightnessctl set +15
+bind = , XF86MonBrightnessDown, exec, brightnessctl set 15-
 
 # SUSPEND
 bindl=,switch:on:Lid Switch, exec, hyprctl dispatch dpms off && hyprctl dispatch exec hyprlock
