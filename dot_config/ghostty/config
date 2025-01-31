@@ -1,0 +1,12 @@
+config-file = theme
+
+font-size = 10
+font-family = "JetBrainsMono Nerd Font"
+font-style = Medium
+adjust-cell-width = 5%
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+window-decoration = false
