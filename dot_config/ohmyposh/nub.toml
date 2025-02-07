@@ -42,6 +42,17 @@ final_space = true
       fetch_status = true
 
 [[blocks]]
+  alignment = 'right'
+  type = 'prompt'
+  overflow = 'hidden'
+
+  [[blocks.segments]]
+  template = '[{{ .CurrentDate | date .Format }}]'
+  foreground = 'black'
+  background = 'transparent'
+  type = 'time'
+
+[[blocks]]
   type = 'rprompt'
   overflow = 'hidden'
 
