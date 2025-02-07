@@ -17,7 +17,23 @@ bindkey -e
 
 alias lg=lazygit
 
-alias v=nvim
+if command -v eza 2>&1 >/dev/null; then 
+  alias ls=eza
+else
+  echo "Missing eza"
+fi
+
+if command -v bat 2>&1 >/dev/null; then
+  alias cat=bat
+else
+  echo "Missing bat"
+fi
+
+if command -v nvim 2>&1 >/dev/null; then
+  alias v=nvim
+else
+  echo "Missing nvim"
+fi
 
 alias pacview="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 # End of lines configured by zsh-newuser-install
@@ -60,11 +76,23 @@ repos=(
 plugin-load $repos
 # # End of lines added by compinstall
 
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/nub.toml)"
+if command -v oh-my-posh 2>&1 >/dev/null; then
+  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/nub.toml)"
+else
+  echo "Missing omp"
+fi
 
 #zoxide setup
-eval "$(zoxide init --cmd cd zsh)"
-eval "$(fzf --zsh)"
+if command -v zoxide 2>&1 >/dev/null; then
+  eval "$(zoxide init --cmd cd zsh)"
+else
+  echo "Missing zoxide"
+fi
+if command -v fzf 2>&1 >/dev/null; then
+  eval "$(fzf --zsh)"
+else
+  echo "Missing fzf"
+fi
 
 # bun completions
 [ -s "/home/nub/.bun/_bun" ] && source "/home/nub/.bun/_bun"
