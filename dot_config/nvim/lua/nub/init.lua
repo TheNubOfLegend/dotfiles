@@ -1,2 +1,2 @@
-require("nub.remap")
-require("nub.set")
+require 'nub.set'
+require 'nub.remap'
