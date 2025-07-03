@@ -1,10 +1,14 @@
 return {
   'echasnovski/mini.indentscope',
-  opts = {
-    draw = {
-      delay = 20,
-      animation = require('mini.indentscope').gen_animation.linear { duration = 10, unit = 'total' },
-    },
-    symbol = '│',
-  },
+  opts = {},
+  config = function()
+    local indentscope = require 'mini.indentscope'
+    indentscope.setup {
+      draw = {
+        delay = 20,
+        animation = indentscope.gen_animation.none(),
+      },
+      symbol = '│',
+    }
+  end,
 }
