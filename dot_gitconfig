@@ -1,16 +1,21 @@
 [pull]
 	ff = only
-[credential]
-	helper = store
-[user]
-	email = thenuboflegend@proton.me
-	name = thenuboflegend
 [core]
 	editor = nvim
 	autocrlf = input
 	safecrlf = false
 	#fixed a clone but no checkout error once
-	longpaths = true
+	# longpaths = true
+
+[includeIf "gitdir/i:~/"]
+  path = ~/git/.gitconfig
+
+[includeIf "gitdir/i:~/school/"]
+  path = ~/school/.gitconfig
+
+[includeIf "gitdir/i:~/work/"]
+  path = ~/work/.gitconfig
+
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
