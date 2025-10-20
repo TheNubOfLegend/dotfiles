@@ -1,33 +1,60 @@
 PATH=$PATH:~/.local/bin
+SUDO_EDITOR=/usr/bin/nvim
 EDITOR=/usr/bin/nvim
 JAVA_HOME=/usr/bin/java
 
-# if uwsm check may-start; then
-#   exec uwsm start hyprland.desktop
-# fi
+eval `ssh-agent` 2>&1 >/dev/null
+ssh-add -L 2>&1 >/dev/null || {
+  ssh-add -q ~/.ssh/cjefferson2
+  ssh-add -q ~/.ssh/thenuboflegend
+  ssh-add -q ~/.ssh/cjeph09
+}
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1100
+HISTSIZE=1000
 SAVEHIST=1000
+
 setopt autocd
-setopt histignorealldups
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
+setopt APPEND_HISTORY            # append to history file
+setopt HIST_NO_STORE             # Don't store history commands
 unsetopt beep notify
-bindkey -e
+bindkey -v
+# theoretically faster response time
+export keytimeout=1
+#use nvim as manpager
+export MANPAGER='nvim +Man!'
 
 alias lg=lazygit
 
+alias test='echo "Using /usr/bin/test, not test file"; test'
+
+function lswitch() {
+    if [ -t 1 ]; then
+        eza --group-directories-first "$@"
+    else
+        command ls "$@"
+    fi
+}
+
 if command -v eza 2>&1 >/dev/null; then 
-  alias ls=eza
+  alias ls=lswitch
 else
   echo "Missing eza"
 fi
 
-if command -v bat 2>&1 >/dev/null; then
-  alias cat=bat
-else
-  echo "Missing bat"
-fi
+# if command -v bat 2>&1 >/dev/null; then
+#   alias cat=bat
+# else
+#   echo "Missing bat"
+# fi
 
 if command -v nvim 2>&1 >/dev/null; then
   alias v=nvim
@@ -64,6 +91,7 @@ repos=(
 
   # other plugins
   zsh-users/zsh-completions
+  jeffreytse/zsh-vi-mode
   # ...
 
   # plugins you want loaded last
@@ -94,9 +122,6 @@ else
   echo "Missing fzf"
 fi
 
-# bun completions
-[ -s "/home/nub/.bun/_bun" ] && source "/home/nub/.bun/_bun"
+export PATH="/home/nub/.local/share/gem/ruby/3.4.0/bin:$PATH"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+eval $(thefuck --alias)
