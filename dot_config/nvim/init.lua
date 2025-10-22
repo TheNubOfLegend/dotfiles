@@ -131,87 +131,6 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  { -- Fuzzy Finder (files, lsp, etc)
-    'folke/snacks.nvim',
-    lazy = false,
-    priority = 1000,
-    dependencies = {
-      -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-    ---@type snacks.Config
-    opts = { picker = {} },
-
-    -- See `:help snacks-pickers-sources`
-    keys = {
-      {
-        '<leader>sh',
-        function() Snacks.picker.help() end,
-        desc = '[S]earch [H]elp',
-      },
-      {
-        '<leader>sk',
-        function() Snacks.picker.keymaps() end,
-        desc = '[S]earch [K]eymaps',
-      },
-      {
-        '<leader>sf',
-        function() Snacks.picker.smart() end,
-        desc = '[S]earch [F]iles',
-      },
-      {
-        '<leader>ss',
-        function() Snacks.picker.pickers() end,
-        desc = '[S]earch [S]elect Snacks',
-      },
-      {
-        '<leader>sw',
-        function() Snacks.picker.grep_word() end,
-        desc = '[S]earch current [W]ord',
-        mode = { 'n', 'x' },
-      },
-      {
-        '<leader>sg',
-        function() Snacks.picker.grep() end,
-        desc = '[S]earch by [G]rep',
-      },
-      {
-        '<leader>sd',
-        function() Snacks.picker.diagnostics() end,
-        desc = '[S]earch [D]iagnostics',
-      },
-      {
-        '<leader>sr',
-        function() Snacks.picker.resume() end,
-        desc = '[S]earch [R]esume',
-      },
-      {
-        '<leader>s.',
-        function() Snacks.picker.recent() end,
-        desc = '[S]earch Recent Files ("." for repeat)',
-      },
-      {
-        '<leader><leader>',
-        function() Snacks.picker.buffers() end,
-        desc = '[ ] Find existing buffers',
-      },
-      {
-        '<leader>/',
-        function() Snacks.picker.lines {} end,
-        desc = '[/] Fuzzily search in current buffer',
-      },
-      {
-        '<leader>s/',
-        function() Snacks.picker.grep_buffers() end,
-        desc = '[S]earch [/] in Open Files',
-      },
-      {
-        '<leader>sn',
-        function() Snacks.picker.files { cwd = vim.fn.stdpath 'config' } end,
-        desc = '[S]earch [N]eovim files',
-      },
-    },
-  },
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -470,6 +389,8 @@ require('lazy').setup({
             },
           },
         },
+
+        ts_ls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -642,16 +563,6 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'sainnhe/gruvbox-material',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function() vim.cmd.colorscheme 'gruvbox-material' end,
-  },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -680,23 +591,6 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
-
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
