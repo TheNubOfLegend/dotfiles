@@ -1,0 +1,19 @@
+Host github.com-thenuboflegend
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/thenuboflegend-keepass.pub
+    IdentitiesOnly yes
+
+Host github.com-joralintern
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/joralintern-keepass.pub
+    IdentitiesOnly yes
+
+# local gitconfig to make this work
+#[user]
+#  name = "thenuboflegend"
+#  email = "thenuboflegend@proton.me"
+#[url "git@github.com-thenuboflegend"]
+#    insteadOf="git@github.com"
+
