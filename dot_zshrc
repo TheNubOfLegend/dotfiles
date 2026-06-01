@@ -1,19 +1,22 @@
-PATH=$PATH:~/.local/bin
+PATH=$PATH:~/.local/bin:~/.dotfiles/bin
 SUDO_EDITOR=/usr/bin/nvim
 EDITOR=/usr/bin/nvim
 JAVA_HOME=/usr/bin/java
 
-eval `ssh-agent` 2>&1 >/dev/null
-ssh-add -L 2>&1 >/dev/null || {
-  ssh-add -q ~/.ssh/cjefferson2
-  ssh-add -q ~/.ssh/thenuboflegend
-  ssh-add -q ~/.ssh/cjeph09
-}
+# setup to complement keepass b/c otherwise zsh can't see the ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# eval `ssh-agent` 2>&1 >/dev/null
+# ssh-add -L 2>&1 >/dev/null || {
+#   ssh-add -q ~/.ssh/cjefferson2
+#   ssh-add -q ~/.ssh/thenuboflegend
+#   ssh-add -q ~/.ssh/cjeph09
+# }
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 setopt autocd
 setopt SHARE_HISTORY             # Share history between all sessions.
@@ -28,7 +31,7 @@ setopt HIST_NO_STORE             # Don't store history commands
 unsetopt beep notify
 bindkey -v
 # theoretically faster response time
-export keytimeout=1
+export keytimeout=10
 #use nvim as manpager
 export MANPAGER='nvim +Man!'
 
@@ -62,18 +65,44 @@ else
   echo "Missing nvim"
 fi
 
-alias pacview="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+pacview() {
+    # Default to -Qq if no arguments are provided
+    local args
+    if [ $# -eq 0 ]; then
+        args=(-Qq)
+    else
+        args=("$@")
+    fi
+
+    # Run FZF and capture the selected packages
+    local selected=$(pacman "${args[@]}" | fzf -m --ansi \
+      --preview 'pacman -Qil {}' \
+      --layout=reverse \
+      --header ' [Tab] Select/Flag  |  [Enter] View Full Info  |  [Ctrl-D] Confirm Selection' \
+      --bind 'enter:execute(pacman -Qil {} | less)' \
+      --bind 'ctrl-d:accept')
+
+    # If you selected packages and pressed Ctrl-D, prompt for removal
+    if [ -n "$selected" ]; then
+        echo -e "\nPackages selected for removal:\n$selected\n"
+        read -k 1 "confirm?Proceed with mass uninstall? (y/N): "
+        echo # Print a newline after the single-key read
+        if [[ $confirm == [yY] ]]; then
+            # Convert newlines to spaces and run pacman
+            sudo pacman -Rns $(echo "$selected" | tr '\n' ' ')
+        else
+            echo "Cancelled."
+        fi
+    fi
+}
+
+# alias pacview="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/nub/.zshrc'
 
 autoload -Uz compinit
 compinit
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # where do you want to store your plugins?
 ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
@@ -100,6 +129,13 @@ repos=(
   zsh-users/zsh-autosuggestions
 )
 
+#here to prevent zsh-vi-mode bck_i_search shit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+
 # now load your plugins
 plugin-load $repos
 # # End of lines added by compinstall
@@ -123,5 +159,3 @@ else
 fi
 
 export PATH="/home/nub/.local/share/gem/ruby/3.4.0/bin:$PATH"
-
-eval $(thefuck --alias)
