@@ -1,10 +1,10 @@
-vim.pack.add { 'https://github.com/m4xshen/hardtime.nvim' }
+vim.pack.add { 'https://github.com/thenuboflegend/hardtime.nvim' }
 require('hardtime').setup {
   disabled_keys = {
-    ['<Up>'] = {},
-    ['<Down>'] = {},
-    ['<Left>'] = {},
-    ['<Right>'] = {},
+    ['<Up>'] = { 'i' },
+    ['<Down>'] = { 'i' },
+    ['<Left>'] = { 'i' },
+    ['<Right>'] = { 'i' },
   },
   restricted_keys = {
     ['<Up>'] = { 'x', 'n' },
