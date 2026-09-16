@@ -88,6 +88,8 @@ do
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
         lua = true,
+        c = true,
+        cpp = true,
         -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
@@ -101,6 +103,8 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      c = { 'clang_format' },
+      cpp = { 'clang_format' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
@@ -172,35 +176,8 @@ do
     end,
   })
 
-  local servers = {}
-  local lsp_dir = vim.fn.stdpath 'config' .. '/lsp'
-
-  -- Check if your lsp/ directory exists
-  if vim.fn.isdirectory(lsp_dir) == 1 then
-    -- Scan every file inside the lsp/ folder
-    for _, file in ipairs(vim.fn.readdir(lsp_dir)) do
-      -- Pick up any file ending in .lua except init.lua
-      if file:match '%.lua$' and file ~= 'init.lua' then
-        -- Strip off the '.lua' extension to get the clean server identifier
-        local server_name = file:gsub('%.lua$', '')
-        table.insert(servers, server_name)
-      end
-    end
-  end
-
-  -- Native, batch-enable every server discovered in the folder
-  if #servers > 0 then vim.lsp.enable(servers) end
-
-  vim.pack.add {
-    gh 'neovim/nvim-lspconfig',
-    gh 'mason-org/mason.nvim',
-    gh 'mason-org/mason-lspconfig.nvim',
-    gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
-  }
-
-  require('mason').setup {}
-
-  require('mason-tool-installer').setup { ensure_installed = servers }
+  -- Enable LSP servers explicitly (using vim.lsp directly)
+  vim.lsp.enable { 'clangd', 'lua_ls' } -- Add servers as needed
 end
 
 -- ============================================================
