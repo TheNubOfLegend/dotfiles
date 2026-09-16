@@ -1,0 +1,14 @@
+# Start with LLVM's K&R brace structure
+BasedOnStyle: LLVM
+
+# Override to your preferred 4 spaces
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+# Ensure K&R style attaching for braces
+BreakBeforeBraces: Attach
+
+# Keeps standard C snake_case from being altered
+ColumnLimit: 80
+
