@@ -1,56 +1,40 @@
 -- clangd_util.lua
--- Utility functions for clangd configuration and .clangd file generation
+-- Utility functions for clangd configuration
 
 local M = {}
 
---- Detect if the current project is an Arduino project
+--- Detect if the current project is a PlatformIO project
 ---@param root_dir string
 ---@return boolean
-local function is_arduino_project(root_dir)
-  local arduino_markers = {
-    'arduino.json',
-    '.arduino.json',
-    'hardware',
-    '*.ino',
-  }
-
-  for _, marker in ipairs(arduino_markers) do
-    if marker:match '%.ino$' then
-      -- Check for .ino files
-      local ino_files = vim.fn.glob(root_dir .. '/**/*.ino')
-      if ino_files ~= '' then return true end
-    else
-      -- Check for marker files/directories
-      local marker_path = root_dir .. '/' .. marker
-      if vim.fn.filereadable(marker_path) == 1 or vim.fn.isdirectory(marker_path) == 1 then return true end
-    end
-  end
-
-  return false
+local function is_platformio_project(root_dir)
+  local platformio_ini = root_dir .. '/platformio.ini'
+  return vim.fn.filereadable(platformio_ini) == 1
 end
 
---- Generate .clangd configuration for C/C++ projects
----@param is_arduino boolean
+--- Generate .clangd configuration
+---@param is_platformio boolean
 ---@return string
-local function generate_clangd_config(is_arduino)
+local function generate_clangd_config(is_platformio)
   local config = 'Diagnostics:\n'
+  config = config .. '  Suppress:\n'
+  config = config .. '    - anon_bitfield_qualifiers\n'
 
-  if is_arduino then
-    -- Arduino-specific diagnostic suppressions
-    config = config .. '  Suppress:\n'
-    config = config .. '    - anon_bitfield_qualifiers\n'
-    config = config .. '    - unknown_attributes\n'
+  if is_platformio then
+    config = config .. '    - pp_file_not_found\n'
   end
 
+  config = config .. '\n'
   config = config .. 'CompileFlags:\n'
+  config = config .. '  CompilationDatabase: .\n'
   config = config .. '  Add:\n'
   config = config .. '    - -ferror-limit=0\n'
 
-  if is_arduino then
-    config = config .. '    - -fpermissive\n'
+  if is_platformio then
+    config = config .. '  Remove:\n'
+    config = config .. '    - -mlongcalls\n'
+    config = config .. '    - -fstrict-volatile-bitfields\n'
+    config = config .. '    - -fno-tree-switch-conversion\n'
   end
-
-  config = config .. '    - -std=c++17\n'
 
   return config
 end
@@ -68,8 +52,7 @@ function M.ensure_clangd_config(root_dir)
     return true
   end
 
-  local is_arduino = is_arduino_project(root_dir)
-  local config_content = generate_clangd_config(is_arduino)
+  local config_content = generate_clangd_config(is_platformio_project(root_dir))
 
   -- Write the .clangd file
   local lines = vim.split(config_content, '\n')
@@ -82,6 +65,10 @@ function M.ensure_clangd_config(root_dir)
     vim.notify(string.format('[clangd] Failed to write .clangd in %s', root_dir), vim.log.levels.WARN)
     return false
   end
+end
+
+function M.is_platformio_project(root_dir)
+  return is_platformio_project(root_dir)
 end
 
 return M
